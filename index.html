@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeLibero – Impara Informatica & Programmazione Gratis</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a26;
+    --border: #2a2a3e;
+    --accent: #00e5ff;
+    --accent2: #ff3d71;
+    --accent3: #ffe600;
+    --text: #e8e8f0;
+    --muted: #6b6b8a;
+    --green: #00ff9d;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: .5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(10,10,15,.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    animation: slideDown .6s ease;
+  }
+
+  @keyframes slideDown { from { transform: translateY(-60px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.3rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: -1px;
+  }
+  .logo span { color: var(--accent2); }
+
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--bg) !important;
+    padding: .45rem 1.1rem;
+    border-radius: 4px;
+    transition: background .2s, transform .1s !important;
+  }
+  .nav-cta:hover { background: #33eaff !important; transform: scale(1.04); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,255,.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%,100%{ opacity:.6; transform:translate(-50%,-50%) scale(1); } 50%{ opacity:1; transform:translate(-50%,-50%) scale(1.1); } }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(0,229,255,.08);
+    border: 1px solid rgba(0,229,255,.25);
+    color: var(--accent);
+    padding: .4rem 1rem;
+    border-radius: 999px;
+    font-family: 'Space Mono', monospace;
+    font-size: .75rem;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    animation: fadeUp .8s .2s both;
+  }
+  .badge::before { content: '●'; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:.2; } }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .8s .35s both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    animation: fadeUp .8s .5s both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp .8s .65s both;
+  }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--accent);
+    color: var(--bg);
+    padding: .8rem 2rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 0 24px rgba(0,229,255,.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0,229,255,.5); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: .5rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .8rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: border-color .2s, background .2s;
+  }
+  .btn-ghost:hover { border-color: var(--accent); background: rgba(0,229,255,.05); }
+
+  .stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    animation: fadeUp .8s .8s both;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Space Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: .75rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: .8rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: var(--muted); max-width: 520px; }
+
+  /* ── COURSES ── */
+  #corsi { background: var(--surface); }
+
+  .courses-header { margin-bottom: 3rem; }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .course-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .course-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s;
+  }
+  .course-card:hover { transform: translateY(-4px); border-color: var(--card-accent, var(--accent)); box-shadow: 0 8px 40px rgba(0,0,0,.4); }
+  .course-card:hover::before { transform: scaleX(1); }
+
+  .course-icon { font-size: 2.2rem; }
+  .course-meta { display: flex; align-items: center; gap: .6rem; }
+  .course-level {
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    padding: .25rem .6rem;
+    border-radius: 4px;
+    background: rgba(0,229,255,.1);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .course-level.medio { background: rgba(255,230,0,.1); color: var(--accent3); }
+  .course-level.avanzato { background: rgba(255,61,113,.1); color: var(--accent2); }
+  .course-lessons {
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    color: var(--muted);
+  }
+  .course-card h3 { font-size: 1.25rem; font-weight: 700; }
+  .course-card p { font-size: .9rem; color: var(--muted); flex: 1; }
+  .course-free {
+    display: inline-block;
+    font-size: .75rem;
+    color: var(--green);
+    font-family: 'Space Mono', monospace;
+  }
+  .course-free::before { content: '✓ '; }
+
+  /* ── RESOURCES ── */
+  #risorse { background: var(--bg); }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.2rem;
+    margin-top: 3rem;
+  }
+
+  .resource-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color .2s, background .2s;
+  }
+  .resource-item:hover { border-color: var(--accent2); background: rgba(255,61,113,.05); }
+  .resource-icon {
+    width: 40px; height: 40px;
+    background: rgba(255,61,113,.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .resource-item h4 { font-size: .95rem; font-weight: 700; margin-bottom: .2rem; }
+  .resource-item p { font-size: .8rem; color: var(--muted); }
+
+  /* ── ROADMAP ── */
+  #roadmap { background: var(--surface); }
+
+  .roadmap-wrapper { margin-top: 3rem; }
+
+  .roadmap-tabs {
+    display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+  }
+  .tab-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: .5rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: .9rem;
+    transition: all .2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: rgba(0,229,255,.1);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .roadmap-path { display: none; flex-direction: column; gap: 0; }
+  .roadmap-path.active { display: flex; }
+
+  .step {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    position: relative;
+  }
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px; top: 44px;
+    width: 2px; height: calc(100% - 20px);
+    background: linear-gradient(var(--border), transparent);
+  }
+  .step-num {
+    width: 40px; height: 40px;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: .2rem;
+    transition: border-color .2s, background .2s;
+  }
+  .step:hover .step-num { border-color: var(--accent); background: rgba(0,229,255,.1); }
+  .step-body { padding-bottom: 2rem; }
+  .step-body h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: .3rem; }
+  .step-body p { font-size: .88rem; color: var(--muted); max-width: 560px; }
+  .step-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .6rem; }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    padding: .2rem .5rem;
+    border-radius: 4px;
+    background: rgba(255,255,255,.05);
+    color: var(--muted);
+  }
+
+  /* ── TOOLS ── */
+  #strumenti { background: var(--bg); }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .tool-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: all .2s;
+    display: flex; flex-direction: column; align-items: center; gap: .7rem;
+  }
+  .tool-card:hover {
+    border-color: var(--accent3);
+    background: rgba(255,230,0,.05);
+    transform: translateY(-3px);
+  }
+  .tool-card .tool-ico { font-size: 2rem; }
+  .tool-card h4 { font-size: .95rem; font-weight: 700; }
+  .tool-card p { font-size: .78rem; color: var(--muted); }
+  .tool-badge {
+    font-size: .65rem;
+    font-family: 'Space Mono', monospace;
+    color: var(--green);
+    background: rgba(0,255,157,.08);
+    padding: .2rem .6rem;
+    border-radius: 4px;
+  }
+
+  /* ── COMMUNITY ── */
+  #community {
+    background: linear-gradient(135deg, #0f0f1e 0%, #1a0a1e 100%);
+    text-align: center;
+  }
+  #community .container { display: flex; flex-direction: column; align-items: center; }
+  #community h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 1rem; }
+  #community h2 span { color: var(--accent2); }
+  #community p { color: var(--muted); max-width: 500px; margin-bottom: 2.5rem; }
+
+  .community-links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .comm-btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: .9rem;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .comm-btn:hover { transform: translateY(-2px); }
+  .comm-discord { background: #5865F2; color: #fff; box-shadow: 0 4px 20px rgba(88,101,242,.3); }
+  .comm-discord:hover { box-shadow: 0 8px 30px rgba(88,101,242,.5); }
+  .comm-telegram { background: #229ED9; color: #fff; box-shadow: 0 4px 20px rgba(34,158,217,.3); }
+  .comm-github { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+  .comm-github:hover { border-color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo { font-family: 'Space Mono', monospace; color: var(--accent); font-size: 1.1rem; }
+  .footer-logo span { color: var(--accent2); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: .88rem; transition: color .2s; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { color: var(--muted); font-size: .8rem; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav ul { display: none; }
+    .stats { gap: 1.5rem; }
+    .stat-num { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Code<span>Libero</span><span style="color:var(--muted);">.it</span></a>
+  <ul>
+    <li><a href="#corsi">Corsi</a></li>
+    <li><a href="#risorse">Risorse</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#strumenti">Strumenti</a></li>
+    <li><a href="#community" class="nav-cta">Community</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="badge">100% Gratuito · Italiano · Aggiornato 2025</div>
+
+  <h1>Impara a<br><em>programmare</em><br>da zero. Gratis.</h1>
+
+  <p>Corsi, guide, strumenti e una community per diventare sviluppatore — senza spendere un euro. Dal primo "Hello World" al tuo primo progetto reale.</p>
+
+  <div class="hero-btns">
+    <a href="#corsi" class="btn-primary">▶ Inizia Ora</a>
+    <a href="#roadmap" class="btn-ghost">Scegli il tuo percorso →</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Corsi gratis</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Linguaggi</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Risorse online</div>
+    </div>
+  </div>
+</section>
+
+<!-- CORSI -->
+<section id="corsi">
+  <div class="container">
+    <div class="courses-header">
+      <div class="section-label">// Corsi</div>
+      <h2 class="section-title">Cosa vuoi imparare?</h2>
+      <p class="section-sub">Ogni corso è collegato a risorse gratuite verificate: video, documentazione, esercizi pratici.</p>
+    </div>
+
+    <div class="courses-grid">
+
+      <a href="https://www.w3schools.com/html/" target="_blank" class="course-card" style="--card-accent:#ff6b35;">
+        <div class="course-icon">🌐</div>
+        <div class="course-meta">
+          <span class="course-level">base</span>
+          <span class="course-lessons">12 lezioni</span>
+        </div>
+        <h3>HTML & CSS</h3>
+        <p>Il punto di partenza per chiunque voglia creare siti web. Struttura e stile delle pagine.</p>
+        <span class="course-free">Gratis su W3Schools</span>
+      </a>
+
+      <a href="https://javascript.info" target="_blank" class="course-card" style="--card-accent:#ffe600;">
+        <div class="course-icon">⚡</div>
+        <div class="course-meta">
+          <span class="course-level">base</span>
+          <span class="course-lessons">20 lezioni</span>
+        </div>
+        <h3>JavaScript</h3>
+        <p>Il linguaggio del web. Impara a rendere interattive le tue pagine e costruire applicazioni.</p>
+        <span class="course-free">Gratis su JavaScript.info</span>
+      </a>
+
+      <a href="https://www.python.org/about/gettingstarted/" target="_blank" class="course-card" style="--card-accent:#4ec9b0;">
+        <div class="course-icon">🐍</div>
+        <div class="course-meta">
+          <span class="course-level">base</span>
+          <span class="course-lessons">15 lezioni</span>
+        </div>
+        <h3>Python</h3>
+        <p>Il linguaggio più amato per iniziare. Perfetto per automazione, data science e AI.</p>
+        <span class="course-free">Gratis su python.org</span>
+      </a>
+
+      <a href="https://react.dev/learn" target="_blank" class="course-card" style="--card-accent:#00e5ff;">
+        <div class="course-icon">⚛️</div>
+        <div class="course-meta">
+          <span class="course-level medio">medio</span>
+          <span class="course-lessons">18 lezioni</span>
+        </div>
+        <h3>React</h3>
+        <p>Il framework JavaScript più usato al mondo per costruire interfacce moderne e reattive.</p>
+        <span class="course-free">Gratis su react.dev</span>
+      </a>
+
+      <a href="https://git-scm.com/book/it/v2" target="_blank" class="course-card" style="--card-accent:#ff3d71;">
+        <div class="course-icon">🔀</div>
+        <div class="course-meta">
+          <span class="course-level">base</span>
+          <span class="course-lessons">8 lezioni</span>
+        </div>
+        <h3>Git & GitHub</h3>
+        <p>Il controllo di versione è fondamentale per ogni sviluppatore. Impara a usarlo subito.</p>
+        <span class="course-free">Gratis su git-scm.com</span>
+      </a>
+
+      <a href="https://www.freecodecamp.org/learn/data-analysis-with-python/" target="_blank" class="course-card" style="--card-accent:#9b59b6;">
+        <div class="course-icon">📊</div>
+        <div class="course-meta">
+          <span class="course-level medio">medio</span>
+          <span class="course-lessons">22 lezioni</span>
+        </div>
+        <h3>Data Science</h3>
+        <p>Analisi dei dati, visualizzazione e machine learning con Python. Il futuro è qui.</p>
+        <span class="course-free">Gratis su freeCodeCamp</span>
+      </a>
+
+      <a href="https://www.theodinproject.com/paths/full-stack-javascript" target="_blank" class="course-card" style="--card-accent:#e67e22;">
+        <div class="course-icon">🗄️</div>
+        <div class="course-meta">
+          <span class="course-level avanzato">avanzato</span>
+          <span class="course-lessons">30 lezioni</span>
+        </div>
+        <h3>Backend & Node.js</h3>
+        <p>Crea server, API REST e gestisci database con Node.js, Express e MongoDB.</p>
+        <span class="course-free">Gratis su The Odin Project</span>
+      </a>
+
+      <a href="https://cs50.harvard.edu/x/" target="_blank" class="course-card" style="--card-accent:#00ff9d;">
+        <div class="course-icon">🎓</div>
+        <div class="course-meta">
+          <span class="course-level medio">medio</span>
+          <span class="course-lessons">10 settimane</span>
+        </div>
+        <h3>CS50 Harvard</h3>
+        <p>Il corso di informatica più famoso al mondo. Gratuito, certificato, in inglese con sub ITA.</p>
+        <span class="course-free">Gratis su edX.org</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- RISORSE -->
+<section id="risorse">
+  <div class="container">
+    <div class="section-label">// Risorse</div>
+    <h2 class="section-title">I migliori siti gratuiti</h2>
+    <p class="section-sub">Una selezione curata delle piattaforme di apprendimento più complete e usate dai professionisti.</p>
+
+    <div class="resources-grid">
+
+      <a href="https://www.freecodecamp.org" target="_blank" class="resource-item">
+        <div class="resource-icon">🏕️</div>
+        <div>
+          <h4>freeCodeCamp</h4>
+          <p>3.000+ ore di curriculum gratuito con certificazioni.</p>
+        </div>
+      </a>
+
+      <a href="https://developer.mozilla.org/it/" target="_blank" class="resource-item">
+        <div class="resource-icon">🦊</div>
+        <div>
+          <h4>MDN Web Docs</h4>
+          <p>Documentazione ufficiale per HTML, CSS e JavaScript.</p>
+        </div>
+      </a>
+
+      <a href="https://www.theodinproject.com" target="_blank" class="resource-item">
+        <div class="resource-icon">⚔️</div>
+        <div>
+          <h4>The Odin Project</h4>
+          <p>Percorso completo da zero a sviluppatore fullstack.</p>
+        </div>
+      </a>
+
+      <a href="https://www.khanacademy.org/computing" target="_blank" class="resource-item">
+        <div class="resource-icon">🎯</div>
+        <div>
+          <h4>Khan Academy</h4>
+          <p>Programmazione e informatica anche in italiano.</p>
+        </div>
+      </a>
+
+      <a href="https://exercism.org" target="_blank" class="resource-item">
+        <div class="resource-icon">💪</div>
+        <div>
+          <h4>Exercism</h4>
+          <p>Esercizi pratici con mentor gratuiti su 60+ linguaggi.</p>
+        </div>
+      </a>
+
+      <a href="https://www.codewars.com" target="_blank" class="resource-item">
+        <div class="resource-icon">⚔️</div>
+        <div>
+          <h4>Codewars</h4>
+          <p>Sfide di programmazione gamificate per migliorare.</p>
+        </div>
+      </a>
+
+      <a href="https://roadmap.sh" target="_blank" class="resource-item">
+        <div class="resource-icon">🗺️</div>
+        <div>
+          <h4>Roadmap.sh</h4>
+          <p>Guide visive per ogni percorso di carriera tech.</p>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/@TraversyMedia" target="_blank" class="resource-item">
+        <div class="resource-icon">▶️</div>
+        <div>
+          <h4>YouTube Coding</h4>
+          <p>Traversy Media, Fireship, Kevin Powell — video gratis.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-label">// Roadmap</div>
+    <h2 class="section-title">Scegli il tuo percorso</h2>
+    <p class="section-sub">Segui un percorso strutturato per non perderti. Clicca sulla carriera che ti interessa.</p>
+
+    <div class="roadmap-wrapper">
+      <div class="roadmap-tabs">
+        <button class="tab-btn active" onclick="showPath('frontend')">🌐 Frontend</button>
+        <button class="tab-btn" onclick="showPath('backend')">⚙️ Backend</button>
+        <button class="tab-btn" onclick="showPath('fullstack')">🚀 Full Stack</button>
+        <button class="tab-btn" onclick="showPath('datascience')">📊 Data Science</button>
+        <button class="tab-btn" onclick="showPath('cybersec')">🔒 Cybersecurity</button>
+      </div>
+
+      <!-- FRONTEND -->
+      <div class="roadmap-path active" id="path-frontend">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>HTML & CSS — Le basi del web</h4>
+            <p>Impara a strutturare pagine web con HTML e stilizzarle con CSS. Layout, Flexbox, Grid.</p>
+            <div class="step-tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Flexbox</span><span class="tag">Grid</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>JavaScript — Dai vita alle pagine</h4>
+            <p>Variabili, funzioni, DOM, eventi, fetch API. Il JS moderno (ES6+) è imprescindibile.</p>
+            <div class="step-tags"><span class="tag">ES6+</span><span class="tag">DOM</span><span class="tag">Async/Await</span><span class="tag">Fetch</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Git & GitHub — Controlla il codice</h4>
+            <p>Impara a versionare i tuoi progetti e collaborare con altri sviluppatori.</p>
+            <div class="step-tags"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Branch</span><span class="tag">Pull Request</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>React o Vue — Framework moderni</h4>
+            <p>Scegli un framework UI. React è il più richiesto, Vue è ottimo per iniziare.</p>
+            <div class="step-tags"><span class="tag">React</span><span class="tag">Vue</span><span class="tag">Component</span><span class="tag">State</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4>Portfolio & Deploy — Mostra il tuo lavoro</h4>
+            <p>Crea 3-5 progetti, pubblicali su GitHub e Vercel. Inizia a candidarti!</p>
+            <div class="step-tags"><span class="tag">Portfolio</span><span class="tag">Vercel</span><span class="tag">Netlify</span><span class="tag">GitHub Pages</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BACKEND -->
+      <div class="roadmap-path" id="path-backend">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Python o Node.js — Scegli il linguaggio</h4>
+            <p>Python è versatile e leggibile. Node.js ti permette di usare JavaScript lato server.</p>
+            <div class="step-tags"><span class="tag">Python</span><span class="tag">Node.js</span><span class="tag">npm</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Database — SQL e NoSQL</h4>
+            <p>Impara a salvare e recuperare dati con PostgreSQL, MySQL o MongoDB.</p>
+            <div class="step-tags"><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>API REST — Collega frontend e backend</h4>
+            <p>Crea API con Express (Node) o FastAPI/Django (Python). Capire HTTP è fondamentale.</p>
+            <div class="step-tags"><span class="tag">REST</span><span class="tag">Express</span><span class="tag">FastAPI</span><span class="tag">JSON</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Auth & Sicurezza</h4>
+            <p>JWT, OAuth, hashing password, protezione delle API. La sicurezza non si salta mai.</p>
+            <div class="step-tags"><span class="tag">JWT</span><span class="tag">bcrypt</span><span class="tag">OAuth</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FULLSTACK -->
+      <div class="roadmap-path" id="path-fullstack">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Basi HTML/CSS/JS</h4>
+            <p>Il fondamento di tutto. Almeno 2 mesi di pratica quotidiana su questi tre.</p>
+            <div class="step-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>React (Frontend) + Node.js (Backend)</h4>
+            <p>Lo stack MERN (MongoDB, Express, React, Node) è tra i più richiesti nel mercato.</p>
+            <div class="step-tags"><span class="tag">MERN</span><span class="tag">React</span><span class="tag">Node</span><span class="tag">Express</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Database + API</h4>
+            <p>Collega tutto: frontend, backend e database. Costruisci la tua prima app completa.</p>
+            <div class="step-tags"><span class="tag">MongoDB</span><span class="tag">REST API</span><span class="tag">Fullstack</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Deploy & DevOps base</h4>
+            <p>Pubblica la tua app su Render, Railway o Vercel. Impara Docker per isolare l'ambiente.</p>
+            <div class="step-tags"><span class="tag">Docker</span><span class="tag">CI/CD</span><span class="tag">Render</span><span class="tag">Railway</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATA SCIENCE -->
+      <div class="roadmap-path" id="path-datascience">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Python — Il linguaggio dei dati</h4>
+            <p>Padroneggia Python: liste, dizionari, funzioni, file I/O, classi.</p>
+            <div class="step-tags"><span class="tag">Python</span><span class="tag">Jupyter</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>NumPy & Pandas — Manipola i dati</h4>
+            <p>Librerie fondamentali per lavorare con dati numerici e dataset strutturati.</p>
+            <div class="step-tags"><span class="tag">NumPy</span><span class="tag">Pandas</span><span class="tag">DataFrame</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Visualizzazione dati</h4>
+            <p>Matplotlib, Seaborn, Plotly. I grafici giusti raccontano storie potenti.</p>
+            <div class="step-tags"><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">Plotly</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Machine Learning</h4>
+            <p>scikit-learn, regressione, classificazione, clustering. L'AI parte da qui.</p>
+            <div class="step-tags"><span class="tag">scikit-learn</span><span class="tag">ML</span><span class="tag">TensorFlow</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CYBERSEC -->
+      <div class="roadmap-path" id="path-cybersec">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Networking — Come funziona internet</h4>
+            <p>TCP/IP, DNS, HTTP, firewall. Senza capire le reti, non c'è sicurezza informatica.</p>
+            <div class="step-tags"><span class="tag">TCP/IP</span><span class="tag">DNS</span><span class="tag">HTTP</span><span class="tag">Firewall</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Linux — Il sistema operativo dei pro</h4>
+            <p>Comandi base, permessi, script bash. Linux è ovunque nel mondo della sicurezza.</p>
+            <div class="step-tags"><span class="tag">Linux</span><span class="tag">Bash</span><span class="tag">Kali</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Hacking Etico — TryHackMe & HackTheBox</h4>
+            <p>Piattaforme gratuite per imparare penetration testing in ambienti sicuri e legali.</p>
+            <div class="step-tags"><span class="tag">TryHackMe</span><span class="tag">HackTheBox</span><span class="tag">CTF</span></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Certificazioni — CompTIA Security+</h4>
+            <p>La certificazione entry-level più riconosciuta nel settore. Studio gratuito su YouTube.</p>
+            <div class="step-tags"><span class="tag">CompTIA</span><span class="tag">Security+</span><span class="tag">CEH</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STRUMENTI -->
+<section id="strumenti">
+  <div class="container">
+    <div class="section-label">// Strumenti</div>
+    <h2 class="section-title">Editor & ambienti gratuiti</h2>
+    <p class="section-sub">Tutto il necessario per programmare gratis, anche dal browser senza installare nulla.</p>
+
+    <div class="tools-grid">
+
+      <a href="https://code.visualstudio.com" target="_blank" class="tool-card">
+        <div class="tool-ico">💻</div>
+        <h4>VS Code</h4>
+        <p>Il miglior editor di codice gratuito. Extensions per tutto.</p>
+        <span class="tool-badge">Gratuito</span>
+      </a>
+
+      <a href="https://codepen.io" target="_blank" class="tool-card">
+        <div class="tool-ico">✏️</div>
+        <h4>CodePen</h4>
+        <p>Editor web per HTML/CSS/JS direttamente nel browser.</p>
+        <span class="tool-badge">Online</span>
+      </a>
+
+      <a href="https://replit.com" target="_blank" class="tool-card">
+        <div class="tool-ico">🔄</div>
+        <h4>Replit</h4>
+        <p>IDE cloud per 50+ linguaggi. Ottimo per collaborare.</p>
+        <span class="tool-badge">Online</span>
+      </a>
+
+      <a href="https://colab.research.google.com" target="_blank" class="tool-card">
+        <div class="tool-ico">📓</div>
+        <h4>Google Colab</h4>
+        <p>Jupyter Notebook gratis con GPU per Data Science e ML.</p>
+        <span class="tool-badge">Gratuito</span>
+      </a>
+
+      <a href="https://stackblitz.com" target="_blank" class="tool-card">
+        <div class="tool-ico">⚡</div>
+        <h4>StackBlitz</h4>
+        <p>VS Code nel browser per React, Angular, Vue. Immediato.</p>
+        <span class="tool-badge">Online</span>
+      </a>
+
+      <a href="https://github.com" target="_blank" class="tool-card">
+        <div class="tool-ico">🐙</div>
+        <h4>GitHub</h4>
+        <p>Salva e condividi i tuoi progetti. Portfolio gratuito per sviluppatori.</p>
+        <span class="tool-badge">Gratuito</span>
+      </a>
+
+      <a href="https://www.infinityfree.com" target="_blank" class="tool-card">
+        <div class="tool-ico">🚀</div>
+        <h4>InfinityFree</h4>
+        <p>Hosting gratuito per i tuoi siti HTML/PHP. Ottimo per iniziare.</p>
+        <span class="tool-badge">Hosting</span>
+      </a>
+
+      <a href="https://vercel.com" target="_blank" class="tool-card">
+        <div class="tool-ico">▲</div>
+        <h4>Vercel</h4>
+        <p>Deploy gratuito per progetti React, Next.js e siti statici.</p>
+        <span class="tool-badge">Deploy</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="community">
+  <div class="container">
+    <div class="section-label">// Community</div>
+    <h2>Impara insieme,<br><span>cresci più in fretta</span></h2>
+    <p>Unisciti a migliaia di studenti italiani che imparano a programmare. Chiedi aiuto, condividi progressi, trova collaboratori.</p>
+    <div class="community-links">
+      <a href="https://discord.gg/" target="_blank" class="comm-btn comm-discord">💬 Discord Italia Dev</a>
+      <a href="https://t.me/" target="_blank" class="comm-btn comm-telegram">✈️ Telegram Gruppo</a>
+      <a href="https://github.com" target="_blank" class="comm-btn comm-github">🐙 GitHub Community</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Code<span>Libero</span>.it</div>
+    <nav class="footer-links">
+      <a href="#corsi">Corsi</a>
+      <a href="#risorse">Risorse</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#strumenti">Strumenti</a>
+    </nav>
+    <p class="footer-copy">© 2025 CodeLibero — Fatto con ❤️ per chi vuole imparare</p>
+  </div>
+</footer>
+
+<script>
+  // Roadmap tabs
+  function showPath(id) {
+    document.querySelectorAll('.roadmap-path').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('path-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.course-card, .resource-item, .tool-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    observer.observe(el);
+  });
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
